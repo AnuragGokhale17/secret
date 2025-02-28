@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -371,5 +371,419 @@
             document.getElementById('emojiAnimation').innerHTML = '';
         }
     </script>
+</body>
+</html>
+ -->
+
+
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Private Space</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #4f46e5;
+      --secondary-color: #6366f1;
+      --background: #f8fafc;
+      --text-color: #1e293b;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--background);
+      color: var(--text-color);
+      line-height: 1.6;
+      padding: 20px;
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+      z-index: 1;
+      height: calc(100vh - 40px);
+      overflow-y: auto;
+    }
+
+    .password-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--card-bg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .password-box {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+      z-index: 1001;
+    }
+
+    .password-box input, .password-box select {
+      width: 100%;
+      padding: 0.75rem;
+      margin: 0.5rem 0;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    h1 {
+      color: var(--primary-color);
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+      font-weight: 600;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .entry-form {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2rem;
+    }
+
+    textarea {
+      width: 100%;
+      height: 120px;
+      padding: 1rem;
+      margin: 1rem 0;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      resize: vertical;
+      font-family: inherit;
+      font-size: 1rem;
+    }
+
+    button {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    button:hover {
+      background: var(--secondary-color);
+      transform: translateY(-1px);
+    }
+
+    .logout-btn {
+      background: #f8fafc;
+      color: var(--primary-color);
+      border: 1px solid var(--border-color);
+    }
+
+    .logout-btn:hover {
+      background: #f1f5f9;
+    }
+
+    .entries {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .entry {
+      margin: 1rem 0;
+      padding: 1rem;
+      border-left: 4px solid var(--primary-color);
+      background: #f8fafc;
+      border-radius: 8px;
+    }
+
+    .entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .user-name {
+      font-weight: 500;
+      color: var(--primary-color);
+    }
+
+    .date {
+      font-size: 0.875rem;
+      color: #64748b;
+    }
+
+    .content {
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .empty-state {
+      text-align: center;
+      color: #64748b;
+      padding: 2rem;
+    }
+
+    /* Background Animation */
+    .emoji-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .emoji {
+      position: absolute;
+      font-size: 2rem;
+      animation: float 10s infinite ease-in-out;
+      opacity: 0;
+      bottom: -50px;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+      }
+      20% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="emoji-animation" id="emojiAnimation"></div>
+
+  <div class="password-screen">
+    <div class="password-box">
+      <h2>Our Private Space</h2>
+      <p>Select your user and enter the password:</p>
+      <select id="userSelect">
+        <option value="Anurag 🖤">Anurag 🖤</option>
+        <option value="Ishita 💕">Ishita 💕</option>
+      </select>
+      <input type="password" id="passwordInput" placeholder="Enter password">
+      <button onclick="checkPassword()">Unlock</button>
+    </div>
+  </div>
+
+  <div class="container" style="display: none;">
+    <div class="header">
+      <h1>Welcome, <span id="currentUser"></span></h1>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+    
+    <div class="entry-form">
+      <h2>New Entry</h2>
+      <textarea id="newEntry" placeholder="Write your thoughts here..."></textarea>
+      <button onclick="addEntry()">Save Entry</button>
+    </div>
+
+    <div class="entries">
+      <h2>Previous Entries</h2>
+      <div id="entriesList">
+        <div class="empty-state">No entries yet. Start by writing something!</div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    // Import Firebase and Firestore
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
+    import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+
+    // Your Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDxnhAFtiV6ZjMtpD4TjmWcNMcBFHW73t8",
+      authDomain: "secret-e52d6.firebaseapp.com",
+      projectId: "secret-e52d6",
+      storageBucket: "secret-e52d6.firebasestorage.app",
+      messagingSenderId: "207554484422",
+      appId: "1:207554484422:web:ebe34ac7af794b0aa91fc7",
+      measurementId: "G-7R49DYHH8M"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getFirestore(app); // Initialize Firestore
+
+    const PASSWORD = '2209'; // Change this!
+    const LOGIN_STATE_KEY = 'loginState';
+    let currentUser = '';
+
+    // Check if user is already logged in
+    function checkLoginState() {
+      const loginState = localStorage.getItem(LOGIN_STATE_KEY);
+      if (loginState) {
+        const { user, emoji } = JSON.parse(loginState);
+        currentUser = user;
+        document.getElementById('currentUser').textContent = currentUser;
+        document.querySelector('.password-screen').style.display = 'none';
+        document.querySelector('.container').style.display = 'block';
+        startAnimation(emoji);
+        loadEntries();
+      }
+    }
+
+    // Run on page load
+    checkLoginState();
+
+    function checkPassword() {
+      const input = document.getElementById('passwordInput').value;
+      const user = document.getElementById('userSelect').value;
+      
+      if (input === PASSWORD) {
+        currentUser = user;
+        document.getElementById('currentUser').textContent = currentUser;
+        document.querySelector('.password-screen').style.display = 'none';
+        document.querySelector('.container').style.display = 'block';
+
+        // Save login state
+        const emoji = user.includes('Ishita') ? '💕' : '🖤';
+        localStorage.setItem(LOGIN_STATE_KEY, JSON.stringify({ user, emoji }));
+
+        // Start background animation
+        startAnimation(emoji);
+        loadEntries();
+      } else {
+        alert('Incorrect password. Please try again.');
+      }
+    }
+
+    function logout() {
+      document.querySelector('.password-screen').style.display = 'flex';
+      document.querySelector('.container').style.display = 'none';
+      document.getElementById('passwordInput').value = '';
+      currentUser = '';
+      localStorage.removeItem(LOGIN_STATE_KEY);
+      stopAnimation();
+    }
+
+    async function addEntry() {
+      const text = document.getElementById('newEntry').value.trim();
+      if (text) {
+        const entry = {
+          user: currentUser,
+          date: new Date().toLocaleString(),
+          content: text
+        };
+
+        try {
+          // Save entry to Firestore
+          await addDoc(collection(db, 'entries'), entry);
+          document.getElementById('newEntry').value = '';
+          loadEntries(); // Refresh the entries list
+        } catch (error) {
+          console.error('Error saving entry:', error);
+          alert('Failed to save entry. Please try again.');
+        }
+      }
+    }
+
+    async function loadEntries() {
+      const entriesList = document.getElementById('entriesList');
+      entriesList.innerHTML = '<div class="empty-state">Loading entries...</div>';
+
+      try {
+        // Query Firestore for entries, ordered by date
+        const q = query(collection(db, 'entries'), orderBy('date', 'desc'));
+        const querySnapshot = await getDocs(q);
+
+        const entries = [];
+        querySnapshot.forEach((doc) => {
+          entries.push(doc.data());
+        });
+
+        if (entries.length > 0) {
+          const entriesHTML = entries.map(entry => `
+            <div class="entry">
+              <div class="entry-header">
+                <div class="user-name">${entry.user}</div>
+                <div class="date">${entry.date}</div>
+              </div>
+              <div class="content">${entry.content}</div>
+            </div>
+          `).join('');
+          entriesList.innerHTML = entriesHTML;
+        } else {
+          entriesList.innerHTML = '<div class="empty-state">No entries yet. Start by writing something!</div>';
+        }
+      } catch (error) {
+        console.error('Error loading entries:', error);
+        entriesList.innerHTML = '<div class="empty-state">Failed to load entries. Please try again.</div>';
+      }
+    }
+
+    // Background Animation
+    let animationInterval;
+
+    function startAnimation(emoji) {
+      const emojiAnimation = document.getElementById('emojiAnimation');
+      emojiAnimation.innerHTML = '';
+
+      animationInterval = setInterval(() => {
+        const emojiElement = document.createElement('div');
+        emojiElement.className = 'emoji';
+        emojiElement.textContent = emoji;
+        emojiElement.style.left = `${Math.random() * 100}vw`;
+        emojiElement.style.animationDuration = `${Math.random() * 5 + 5}s`;
+        emojiElement.style.fontSize = `${Math.random() * 2 + 2}rem`;
+        emojiAnimation.appendChild(emojiElement);
+
+        // Remove emoji after animation ends
+        setTimeout(() => {
+          emojiElement.remove();
+        }, 10000);
+      }, 300);
+    }
+
+    function stopAnimation() {
+      clearInterval(animationInterval);
+      document.getElementById('emojiAnimation').innerHTML = '';
+    }
+  </script>
 </body>
 </html>
